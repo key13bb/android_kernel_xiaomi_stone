@@ -1,0 +1,5 @@
+config SUSFS
+    bool "SUSFS support"
+    default y
+    help
+      Simple Untrusted Storage Filesystem support.
