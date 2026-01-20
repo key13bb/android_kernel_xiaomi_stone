@@ -143,18 +143,18 @@ out_seq_printf:
 
 void inotify_show_fdinfo(struct seq_file *m, struct file *f)
 {
-	#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
 	show_fdinfo(m, f, inotify_fdinfo);
-	#else
-	show_fdinfo(m, f);
-	#endif
 }
 
 #endif /* CONFIG_INOTIFY_USER */
 
 #ifdef CONFIG_FANOTIFY
 
+#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
 static void fanotify_fdinfo(struct seq_file *m, struct fsnotify_mark *mark, struct file *file)
+#else
+static void fanotify_fdinfo(struct seq_file *m, struct fsnotify_mark *mark)
+#endif
 {
 	unsigned int mflags = 0;
 	struct inode *inode;
@@ -191,11 +191,8 @@ void fanotify_show_fdinfo(struct seq_file *m, struct file *f)
 
 	seq_printf(m, "fanotify flags:%x event-flags:%x\n",
 		   group->fanotify_data.flags, group->fanotify_data.f_flags);
-	#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
+
 	show_fdinfo(m, f, fanotify_fdinfo);
-	#else
-	show_fdinfo(m, f);
-	#endif
 }
 
 #endif /* CONFIG_FANOTIFY */
