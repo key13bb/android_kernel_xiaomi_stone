@@ -50,6 +50,8 @@ struct rcu_tasks {
 	call_rcu_func_t call_func;
 	char *name;
 	char *kname;
+	unsigned long gp_start;
+	int gp_state;
 };
 
 #define DEFINE_RCU_TASKS(rt_name, gp, call, n)				\
